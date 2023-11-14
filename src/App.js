@@ -19,6 +19,7 @@ function App(props) {
   const [object, setObject] = useState({});
   const [fileName, setName] = useState(null);
   const [mids, setMids] = useState({});
+  const [allMids, setAllMids] = useState('');
   const [merchant, setMerchant] = useState(null);
   const [top, setTop] = useState(10);
 
@@ -31,6 +32,7 @@ function App(props) {
         setMids(totals[2]); // object
         setCount(totals[4]);
         setActive(totals[4].mids);
+        setAllMids(totals[5]);
       console.log('file change');
     }
   }, [file]);
@@ -77,7 +79,6 @@ function App(props) {
       if (file.name.slice(-4).toLowerCase() === 'xlsx') {
         const workbook = await readFileAsync(file);
         if (workbook) {
-          console.log('SHEETNAMES HERE:',workbook.SheetNames);
           const sheetName = workbook.SheetNames[2]; // 3rd sheet is relevant one in sample data
           const sheet = workbook.Sheets[sheetName];
           const obj = XLSX.utils.sheet_to_json(sheet);
@@ -227,9 +228,9 @@ function App(props) {
   } else {
     inputMessage = <><strong>Drag and Drop Payments Info</strong><br /> or Click to Upload</>
   }
-  let [name, downloadButton, table, midPie, expensePie, incomeDonut, baseChart, keyTakes, moreInfo, totalCount, radio] = Array(11).fill(null);
+  let [name, downloadButton, table, merchantTable, midPie, expensePie, incomeDonut, baseChart, keyTakes, moreInfo, totalCount, radio] = Array(12).fill(null);
   if (fileName) {
-    moreInfo = <h1 className='MoreInfo' >Click Merchant Segment for Breakdown</h1>
+    moreInfo = <h1 className='MoreInfo' >Click Chart for Merchant Info</h1>
     name = <div>
       Generated From:<br />
       <input className='nameInput' name='name' type='text' placeholder='a' value={fileName} onChange={nameChange} />
@@ -252,10 +253,10 @@ function App(props) {
     totalCount = <div className='merchants'>
       Data from <strong>{active}</strong> Merchants<br />
       <span>Show&thinsp;
-        <select id='selector' onChange={changeActive} value={''}>
+        <select id='selector' onChange={changeActive} value={undefined}>
           <option key='all' value={count.mids}>All</option>
           <option key='open' value={count.open}>Open</option>
-          <option key='positive' value={count.positive}>&gt; 0</option>
+          <option key='positive' value={count.positive}>Active</option>
         </select>
         &thinsp;Accounts</span>
     </div>
@@ -277,6 +278,9 @@ function App(props) {
     table = <div className='table' id='table'>
       <Table className="tableDiv" csv={download} />
     </div>
+    merchantTable = <div className='merchantTable' id='merchantTable'>
+    <Table className="tableDiv" csv={allMids} />
+  </div>
   }
   if (merchant) {
     moreInfo = <MoreInfo file={file} merchant={merchant} />
@@ -299,6 +303,7 @@ function App(props) {
       {radio}
       {expensePie}
       {incomeDonut}
+      {merchantTable}
       <div className='tableBox'>
         {table}
         <span className='downloadButton'>{downloadButton}</span>

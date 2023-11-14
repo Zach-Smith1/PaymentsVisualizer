@@ -16,7 +16,7 @@ export function getColumns(allColumns) {
 }
 
 export function getSpendingTotals(file, category) {
-  console.log(`getSpendingTotals is parsing csv file...`);
+  console.log(`getSpendingTotals is parsing file...`);
   let [mids, open, positive] = Array(3).fill(0);
   let midIncome = {};
   let midExpense = {};
@@ -36,8 +36,8 @@ export function getSpendingTotals(file, category) {
 
   allRows = allRows.slice(colRow + 1);
   const totals = {};
-  let head = true; // boolean variable to keep track of adding column names to output file
-  let finalCsv = '';
+  let totalsCsv = '';
+  let allMids = [];
 
   allRows.forEach((row) => {
     let rowArr = row.split(',');
@@ -46,14 +46,6 @@ export function getSpendingTotals(file, category) {
     let rowObj = {};
 
     for (let i = Math.min(...relColsNums); i <= Math.max(...relColsNums); i++) {
-      // logs relevant data for category in question
-      // if (category && rowArr[i] === category) {
-      //   if (head === true) {
-      //     finalCsv = `${relevantColumns}\n`;
-      //     head = false
-      //   }
-      //   finalCsv += `${rowArr[dateCol]},${rowArr[desCol]},${number},${rowArr[catCol]}\n`;
-      // }
       if (relColsNums.includes(i)) {
         rowObj[columnNames[i]] = rowArr[i];
       }
@@ -63,14 +55,9 @@ export function getSpendingTotals(file, category) {
     /* each row of is represented as key value pair in the final object, the key is the item number, the value
      is an object of column names (keys) and values */
 
-     let name = rowObj['Merchant Name'].toUpperCase();
-      // below code is for combining MID's with same name together
-    //  if (midIncome. midExpense,hasOwnProperty(name)) {
-    //    midIncome[ midExpense,name] += Number(rowObj['Income'])
-    //   } else if (rowObj['Income'] !== undefined) {
-    //     midIncome[ midExpense,name] = Number(rowObj['Income'])
-    //   }
+    let name = rowObj['Merchant Name'].toUpperCase();
     let merchant = rowObj['Merchant Name'];
+    if (rowObj['Residual']) allMids.push([name,rowObj['Residual']]);
     midIncome[merchant] = [name, Number(rowObj['Income'])]
     midExpense[merchant] = [name, Number(rowObj['Expense'])]
       for (let col in rowObj) {
@@ -94,19 +81,28 @@ export function getSpendingTotals(file, category) {
     }
   })
 
-
-  // if getting specific category breakdown return (only spending from that category)
-  if (category) {
-    return finalCsv
-  }
   for (let name in totals) {
     // round totals to next highest cent
     let rows = `${name}, ${Number(totals[name].toFixed(2))}\n`;
     // store as csv formatted string
-    finalCsv += rows;
+    totalsCsv += rows;
   }
 
-  //return totals as csv with header added and as an object (to use keys for category selector wheel)
+  allMids.sort((a, b) => {
+    const merchantA = Number(a[1]);
+    const merchantB = Number(b[1]);
+    if (merchantA < merchantB) {
+      return 1;
+    }
+    if (merchantA > merchantB) {
+      return -1;
+    }
+    return 0;
+  });
+
+  allMids =  "Merchant, Payable\n" + allMids.map(x => x.join(',')).join('\n');
+
   let countObj = {'mids': mids, 'open': open, 'positive': positive};
-  return ["Category, Total\n" + finalCsv, totals, midIncome, midExpense, countObj]
+
+  return ["Category, Total\n" + totalsCsv, totals, midIncome, midExpense, countObj, allMids]
 }

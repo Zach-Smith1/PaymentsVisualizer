@@ -91,7 +91,12 @@ const ExpensePie = ({ totals }) => {
     title: {
       text: 'Expenses Breakdown',
       align: 'center',
-      offsetX: 100
+      offsetX: 100,
+      style: {
+        fontSize:  '24px',
+        fontWeight:  'bold',
+        fontFamily:  undefined,
+      }
     },
     theme: {
       palette: 'palette8',

@@ -107,7 +107,12 @@ const MyDonut = ({ totals, change, top }) => {
     labels: labels,
     title: {
       text: 'Top Merchant Income',
-      align: 'center'
+      align: 'center',
+      style: {
+        fontSize:  '24px',
+        fontWeight:  'bold',
+        fontFamily:  undefined,
+      }
     }
   }
 

@@ -55,8 +55,13 @@ const MyChart = ({ totals, active, aveOn }) => {
       }]
     }],
     title: {
-      text: 'Relvant Totals',
-      align: 'left'
+      text: '',
+      align: 'center',
+      style: {
+        fontSize:  '24px',
+        fontWeight:  'bold',
+        fontFamily:  undefined,
+      }
     }
   }
 

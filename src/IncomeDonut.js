@@ -92,7 +92,12 @@ const IncomeDonut = ({ totals }) => {
     title: {
       text: 'Income Breakdown',
       align: 'center',
-      offsetX: -100
+      offsetX: -100,
+      style: {
+        fontSize:  '24px',
+        fontWeight:  'bold',
+        fontFamily:  undefined,
+      }
     },
     theme: {
       palette: 'palette2'
