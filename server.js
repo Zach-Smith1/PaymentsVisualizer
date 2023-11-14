@@ -1,3 +1,7 @@
+// SERVER CURRENTLY NOT USED
+// APP UNDER DEVELOPMENT
+
+
 const express = require('express');
 const path = require('path');
 

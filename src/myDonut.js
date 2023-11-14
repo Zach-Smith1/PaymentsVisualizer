@@ -1,25 +1,37 @@
 import React, { useState } from "react";
 import Chart from 'react-apexcharts'
 
-const MyDonut = ({ totals, income, housing, change, legend }) => {
+const MyDonut = ({ totals, change, top }) => {
   let series = [];
-  let labels = Object.keys(totals)
+  let labels = [];
   let totalSpend = 0;
   for (const key in totals) {
-    let num = Number(totals[key].toFixed(2));
-    series.push(num);
-    totalSpend += num
+    let num = Number(totals[key][1]);
+    let i = 0;
+    // below code organizes MIDs by income
+    while (num > series[i]) {
+      i++
+    }
+    if (!isNaN(num)) {
+      series.splice(i, 0, num);
+      labels.splice(i, 0, totals[key][0]);
+      totalSpend += num
+    }
   }
+
+  series = series.slice(-top);
+  labels = labels.slice(-top);
+
   const options = {
     chart: {
       events: {
         animationEnd: undefined,
         legendClick: undefined,
-        dataPointSelection: function(event, chartContext, config){
+        dataPointSelection: function (event, chartContext, config) {
           let val = labels[config.dataPointIndex];
           change(val)
         }
-      }
+      },
     },
     plotOptions: {
       pie: {
@@ -30,8 +42,8 @@ const MyDonut = ({ totals, income, housing, change, legend }) => {
         offsetY: 0,
         customScale: 1,
         dataLabels: {
-            offset: 0,
-            minAngleToShowLabel: 10
+          offset: 0,
+          minAngleToShowLabel: 10
         },
         donut: {
           size: '65%',
@@ -63,76 +75,45 @@ const MyDonut = ({ totals, income, housing, change, legend }) => {
             total: {
               show: true,
               showAlways: true,
-              label: 'Total',
-              fontSize: '22px',
+              label: `Top ${top}`,
+              fontSize: '2vw',
               fontFamily: 'Helvetica, Arial, sans-serif',
-              fontWeight: 600,
+              fontWeight: 450,
               color: 'black',
               formatter: function (w) {
-                // add all categories except Savings and round to 2 decimals
-                let i = labels.indexOf('Savings');
                 let totals = w.globals.seriesTotals;
-                if (i > -1) totals.splice(i,1);
-                return '$' + Number((totals.reduce((a, b) => {return a + b})).toFixed(2))
+                return '$' + Number((totals.reduce((a, b) => { return a + b }))).toLocaleString();
               }
             }
           }
-        },
+        }
       }
     },
     legend: {
-      show: legend,
-      showForSingleSeries: false,
-      showForNullSeries: true,
-      showForZeroSeries: true,
-      position: 'bottom',
-      horizontalAlign: 'center',
-      floating: false,
-      fontSize: '14px',
-      fontFamily: 'Helvetica, Arial',
+      show: false,
+      position: 'right'
+    },
+    value: {
+      show: true,
+      fontSize: '18px',
+      fontFamily: 'Helvetica, Arial, sans-serif',
       fontWeight: 400,
-      formatter: undefined,
-      inverseOrder: false,
-      width: undefined,
-      height: undefined,
-      tooltipHoverFormatter: undefined,
-      customLegendItems: [],
-      offsetX: 0,
-      offsetY: 0,
-      labels: {
-          colors: undefined,
-          useSeriesColors: false
-      },
-      itemMargin: {
-          horizontal: 5,
-          vertical: 0
-      },
-      onItemClick: {
-          toggleDataSeries: true
-      },
-      onItemHover: {
-          highlightDataSeries: true
-      },
-  },
+      color: undefined,
+      offsetY: 16,
+      formatter: function (val) {
+        return '$' + val
+      }
+    },
     labels: labels,
     title: {
-      text: 'My Spending',
+      text: 'Top Merchant Income',
       align: 'center'
     }
   }
 
-  if (income > totalSpend) {
-    series.push(Number((income - totalSpend).toFixed(2)));
-    options.labels.push('Savings')
-  }
-  if (housing > 0) {
-    series.push(Number(housing));
-    options.labels.push('Housing')
-  }
-
   return (
-    <div className="myDonut">
-      <Chart options={options} series={series} type="donut" width='100%'/>
+    <div>
+      <Chart options={options} series={series} type='donut' width='80%' />
     </div>
   );
 }
