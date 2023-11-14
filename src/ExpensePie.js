@@ -100,7 +100,7 @@ const ExpensePie = ({ totals }) => {
 
   return (
     <div>
-      <Chart options={options} series={seriesState} type='pie' width='90%' />
+      <Chart options={options} series={seriesState} type='pie' width='80%' />
     </div>
   );
 };

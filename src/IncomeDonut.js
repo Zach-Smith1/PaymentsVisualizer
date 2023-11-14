@@ -90,7 +90,7 @@ const IncomeDonut = ({ totals }) => {
     },
     },
     title: {
-      text: 'Expenses Breakdown',
+      text: 'Income Breakdown',
       align: 'center',
       offsetX: -100
     },
@@ -101,7 +101,7 @@ const IncomeDonut = ({ totals }) => {
 
   return (
     <div>
-      <Chart options={options} series={seriesState} type='pie' width='90%' />
+      <Chart options={options} series={seriesState} type='pie' width='80%' />
     </div>
   );
 };
