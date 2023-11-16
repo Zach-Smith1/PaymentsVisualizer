@@ -17,18 +17,27 @@ export function getColumns(allColumns) {
 
 export function getSpendingTotals(file, category) {
   console.log(`getSpendingTotals is parsing file...`);
+  let check = true;
   let [mids, open, positive] = Array(3).fill(0);
   let midIncome = {};
   let midExpense = {};
   let allRows = file.split('\n')
   let colRow = 0;
-  while (!allRows[colRow].split(',').includes('MID') && !allRows[colRow].split(',').includes('Agent Name')) {
+
+  while (allRows[colRow] && !allRows[colRow].split(',').includes('Merchant Name')) {
     colRow++
   }
+
   const columnNames = allRows[colRow].split(',')
 
-  // Relevant Columns
-  const relevantColumns = ['MID', 'Merchant Name', 'Status', 'Income', 'Expense', 'Residual', 'BC Sales Amount', 'BC Credits Amount', 'BC Auth Expense', 'Debit Expense', 'Other Expense', 'Batch Expense', 'Chargeback Expense', 'AVS Expense', 'Total Stmt Expense', 'Total IC Expense', 'BC Auth Income', 'Debit Income', 'Other Income', 'Batch Income', 'Chargeback Income', 'AVS Income', 'Total Stmt Income', 'Total Discount Income']
+  const relevantColumns = ['MID', 'Merchant Number', 'Merchant ID', 'Merchant Name', 'Status', 'Income', 'Expense', 'Residual', 'BC Sales Amount', 'BC Credits Amount', 'BC Auth Expense', 'Debit Expense', 'Other Expense', 'Batch Expense', 'Chargeback Expense', 'AVS Expense', 'Total Stmt Expense', 'Total IC Expense', 'BC Auth Income', 'Debit Income', 'Other Income', 'Batch Income', 'Chargeback Income', 'AVS Income', 'Total Stmt Income', 'Total Discount Income']
+
+  check = columnNames.some(c => relevantColumns.includes(c));
+  if (check === false) {
+    console.log('No Relevant Column Names Found', allRows[0])
+    return false // exit if no relevant columns found
+  }
+
   let relColsNums = [];
   relevantColumns.forEach((col) => {
     relColsNums.push(columnNames.indexOf(col))
@@ -42,7 +51,7 @@ export function getSpendingTotals(file, category) {
   allRows.forEach((row) => {
     let rowArr = row.split(',');
     if (!rowArr[0]) return
-    // if there's a credit change it to a negative debit (for Capital One)
+
     let rowObj = {};
 
     for (let i = Math.min(...relColsNums); i <= Math.max(...relColsNums); i++) {
@@ -51,11 +60,11 @@ export function getSpendingTotals(file, category) {
       }
     }
 
-
     /* each row of is represented as key value pair in the final object, the key is the item number, the value
      is an object of column names (keys) and values */
-
-    let name = rowObj['Merchant Name'].toUpperCase();
+    let name = rowObj['Merchant Name'];
+    if (!name) return
+    name = name.toUpperCase();
     let merchant = rowObj['Merchant Name'];
     if (rowObj['Residual']) allMids.push([name,rowObj['Residual']]);
     midIncome[merchant] = [name, Number(rowObj['Income'])]

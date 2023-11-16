@@ -1,41 +1,54 @@
 import React, { useState, useEffect } from "react";
 const XLSX = require('xlsx');
-import Table from './table.js';
 import { getSpendingTotals } from './breakdownFns.js';
+import ExpensePie from "./ExpensePie.js";
+import IncomeDonut from "./IncomeDonut.js";
 import KeyData from './KeyData.js';
+import Modal from './Modal.js';
 import MoreInfo from './MoreInfo.js';
 import MyChart from './MyChart.js';
 import MyDonut from "./myDonut.js";
-import ExpensePie from "./ExpensePie.js";
-import IncomeDonut from "./IncomeDonut.js";
+import Table from './table.js';
 
 
 function App(props) {
   const [active, setActive] = useState(null);
+  const [allMids, setAllMids] = useState('');
   const [count, setCount] = useState(null);
   const [dragging, setDragging] = useState(false);
   const [download, setDownload] = useState(null);
   const [file, setFile] = useState(null);
-  const [object, setObject] = useState({});
   const [fileName, setName] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [sheets, setSheets] = useState([]);
+  const [mainSheet, setMainSheet] = useState(null)
   const [mids, setMids] = useState({});
-  const [allMids, setAllMids] = useState('');
   const [merchant, setMerchant] = useState(null);
+  const [object, setObject] = useState({});
   const [top, setTop] = useState(10);
+  const [workbook, setWorkbook] = useState(null);
 
   // Effect to handle state changes and side-effects
   useEffect(() => {
     if (file !== null) {
       let totals = getSpendingTotals(file);
-        setDownload(totals[0]); // string
-        setObject(totals[1]);
-        setMids(totals[2]); // object
-        setCount(totals[4]);
-        setActive(totals[4].mids);
-        setAllMids(totals[5]);
+      setDownload(totals[0]); // string
+      setObject(totals[1]);
+      setMids(totals[2]); // object
+      setCount(totals[4]);
+      setActive(totals[4].mids);
+      setAllMids(totals[5]);
       console.log('file change');
     }
-  }, [file]);
+    if (mainSheet !== null) {
+      const sheetName = workbook.SheetNames[mainSheet]; // 3rd sheet is relevant one in sample data
+      const sheet = workbook.Sheets[sheetName];
+      const obj = XLSX.utils.sheet_to_json(sheet, { raw: true });
+      const csv = sheetObjectToCSV(obj);
+      setFile(csv);
+      // setName(file.name);
+    }
+  }, [file, mainSheet]);
 
   const dragEnter = (e) => {
     e.preventDefault();
@@ -79,11 +92,14 @@ function App(props) {
       if (file.name.slice(-4).toLowerCase() === 'xlsx') {
         const workbook = await readFileAsync(file);
         if (workbook) {
-          const sheetName = workbook.SheetNames[2]; // 3rd sheet is relevant one in sample data
-          const sheet = workbook.Sheets[sheetName];
-          const obj = XLSX.utils.sheet_to_json(sheet);
-          const csv = sheetObjectToCSV(obj);
-          setFile(csv);
+          setSheets(workbook.SheetNames);
+          setWorkbook(workbook);
+          openModal();
+          // const sheetName = workbook.SheetNames[mainSheet];
+          // const sheet = workbook.Sheets[sheetName];
+          // const obj = XLSX.utils.sheet_to_json(sheet);
+          // const csv = sheetObjectToCSV(obj);
+          // setFile(csv);
           setName(file.name);
           return
         } else {
@@ -186,11 +202,14 @@ function App(props) {
     if (files[0].name.slice(-4).toLowerCase() === 'xlsx') {
       const workbook = await readFileAsync(file);
       if (workbook) {
-        const sheetName = workbook.SheetNames[2]; // relevant sheet in sample data
-        const sheet = workbook.Sheets[sheetName];
-        const obj = XLSX.utils.sheet_to_json(sheet);
-        const csv = sheetObjectToCSV(obj);
-        setFile(csv);
+        setSheets(workbook.SheetNames);
+        setWorkbook(workbook);
+        openModal();
+        // const sheetName = workbook.SheetNames[2]; // relevant sheet in sample data
+        // const sheet = workbook.Sheets[sheetName];
+        // const obj = XLSX.utils.sheet_to_json(sheet);
+        // const csv = sheetObjectToCSV(obj);
+        // setFile(csv);
         setName(file.name);
         return
       }
@@ -222,20 +241,35 @@ function App(props) {
     setTop(val);
   }
 
+  const closeModal = () => {
+    setModalOpen(false)
+  }
+
+  const openModal = () => {
+    setModalOpen(true)
+  }
+
+  const selectSheet = (e) => {
+    let val = e.target.value;
+    closeModal()
+    setMainSheet(val)
+  }
+
   let inputMessage;
   if (window.screen.width < 768) {
     inputMessage = "Tap to Upload File"
   } else {
     inputMessage = <><strong>Drag and Drop Payments Info</strong><br /> or Click to Upload</>
   }
-  let [name, downloadButton, table, merchantTable, midPie, expensePie, incomeDonut, baseChart, keyTakes, moreInfo, totalCount, radio] = Array(12).fill(null);
-  if (fileName) {
-    moreInfo = <h1 className='MoreInfo' >Click Chart for Merchant Info</h1>
+  let [allSheets, name, downloadButton, table, merchantTable, midPie, expensePie, incomeDonut, baseChart, keyTakes, moreInfo, totalCount, radio] = Array(13).fill(null);
+  if (download) {
+    moreInfo = <h1 className='MoreInfo'>Click Chart for Merchant Info</h1>
     name = <div>
       Generated From:<br />
       <input className='nameInput' name='name' type='text' placeholder='a' value={fileName} onChange={nameChange} />
     </div>
     radio = <form className='radio'>
+      Show Top
       {[10, 20, 30].map((option) => (
         <label key={option}>
           <input
@@ -248,8 +282,6 @@ function App(props) {
         </label>
       ))}
     </form>
-  }
-  if (download) {
     totalCount = <div className='merchants'>
       Data from <strong>{active}</strong> Merchants<br />
       <span>Show&thinsp;
@@ -274,16 +306,30 @@ function App(props) {
     </div>
     keyTakes = <KeyData data={object} active={active} />
     // download button = button to download the table displayed on screen as a csv file to local device
-    downloadButton = <button onClick={handleDownloadCSV}>Download {fileName}<br/>Table</button>
+    downloadButton = <button onClick={handleDownloadCSV}>Download {fileName}<br />Table</button>
     table = <div className='table' id='table'>
       <Table className="tableDiv" csv={download} />
     </div>
     merchantTable = <div className='merchantTable' id='merchantTable'>
-    <Table className="tableDiv" csv={allMids} />
-  </div>
+      <Table className="tableDiv" csv={allMids} />
+    </div>
   }
   if (merchant) {
     moreInfo = <MoreInfo file={file} merchant={merchant} />
+  }
+  if (sheets) {
+    allSheets = sheets.map((s, i) => {
+      const sheetName = workbook.SheetNames[i]; // 3rd sheet is relevant one in sample data
+      const sheet = workbook.Sheets[sheetName];
+      const obj = XLSX.utils.sheet_to_json(sheet);
+      console.log(obj)
+      const csv = sheetObjectToCSV(obj);
+      if (getSpendingTotals(csv)) {
+        return <button key={i} value={i} onClick={selectSheet}>{s}</button>
+      } else {
+        return <button key={i} className='deadButton' value={i}>{s}</button>
+      }
+    })
   }
 
   return (
@@ -308,6 +354,13 @@ function App(props) {
         {table}
         <span className='downloadButton'>{downloadButton}</span>
       </div>
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <h2>Which Sheet do you want to Inspect?</h2>
+        <br />
+        <span>
+          {allSheets}
+        </span>
+      </Modal>
     </div>
   );
 }

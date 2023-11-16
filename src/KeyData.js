@@ -20,11 +20,11 @@ const KeyData = ({ data, active }) => {
   let effectiveRate = (totalFees / totalVolume);
 
   const formattedNumber = (num) => {
-    return num.toLocaleString('en-US', {
+    return num !== undefined && !isNaN(num) ? num.toLocaleString('en-US', {
       style: 'decimal',
       minimumFractionDigits: 3,
       maximumFractionDigits: 4,
-    })
+    }) : ' No Data Found '
   };
   return (
     <div className='keyData' >
