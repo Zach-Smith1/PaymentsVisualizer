@@ -18,6 +18,7 @@ const KeyData = ({ data, active }) => {
   let aveGrossPer = totalFees / active;
   let aveNetPer = (totalFees - totalPaid) / active;
   let effectiveRate = (totalFees / totalVolume);
+  let markup = (totalFees - totalPaid) / totalFees
 
   const formattedNumber = (num) => {
     return num !== undefined && !isNaN(num) ? num.toLocaleString('en-US', {
@@ -26,6 +27,7 @@ const KeyData = ({ data, active }) => {
       maximumFractionDigits: 4,
     }) : ' No Data Found '
   };
+
   return (
     <div className='keyData' >
       <h1>Key Takeaways:</h1>
@@ -37,6 +39,7 @@ const KeyData = ({ data, active }) => {
       <span className='keys'><strong>Fees Paid: </strong>${formattedNumber(totalPaid)}</span>
       <span className='keys' id='average'><strong>Net Revenue/ MID: </strong>${formattedNumber(aveNetPer)}</span>
       <span className='keys'><strong>Effective Rate: </strong>{formattedNumber((effectiveRate * 100))}%</span>
+      <span className='keys'><strong>Markup: </strong>{formattedNumber((markup * 100))}%</span>
     </div>
   );
 }

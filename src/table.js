@@ -31,6 +31,23 @@ class Table extends React.Component {
     });
   };
 
+  formattedNumber = (num) => {
+    return num !== undefined && !isNaN(num) ? Number(num).toLocaleString('en-US', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 3,
+    }) : ' No Data Found '
+  };
+
+  cellMapper = (c, i) => {
+    if (!isNaN(Number(c))) {
+      return <td key={i} className='col2'>{this.formattedNumber(c)}&thinsp;</td>
+    } else {
+      return <td key={i} className='col1'>&thinsp;{c}</td>
+    }
+  }
+
+
   render() {
     const { tableData } = this.state;
 
@@ -46,9 +63,9 @@ class Table extends React.Component {
         </thead>
         <tbody>
           {tableData.map((row, rowIndex) => (
-            <tr key={rowIndex} className='rows'>
+              <tr key={rowIndex}>
               {Object.values(row).map((cell, cellIndex) => (
-                <td key={cellIndex}>{cell}</td>
+                this.cellMapper(cell, cellIndex)
               ))}
             </tr>
           ))}

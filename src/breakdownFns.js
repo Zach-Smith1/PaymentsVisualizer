@@ -30,11 +30,10 @@ export function getSpendingTotals(file, category) {
 
   const columnNames = allRows[colRow].split(',')
 
-  const relevantColumns = ['MID', 'Merchant Number', 'Merchant ID', 'Merchant Name', 'Status', 'Income', 'Expense', 'Residual', 'BC Sales Amount', 'BC Credits Amount', 'BC Auth Expense', 'Debit Expense', 'Other Expense', 'Batch Expense', 'Chargeback Expense', 'AVS Expense', 'Total Stmt Expense', 'Total IC Expense', 'BC Auth Income', 'Debit Income', 'Other Income', 'Batch Income', 'Chargeback Income', 'AVS Income', 'Total Stmt Income', 'Total Discount Income']
+  const relevantColumns = ['MID', 'Merchant Number', 'Merchant ID', 'Merchant Name', 'Status', 'Income', 'Revenue', 'Expense', 'Residual', 'BC Sales Amount', 'BC Credits Amount', 'BC Auth Expense', 'Debit Expense', 'Other Expense', 'Batch Expense', 'Chargeback Expense', 'AVS Expense', 'Total Stmt Expense', 'Total IC Expense', 'BC Auth Income', 'Debit Income', 'Other Income', 'Batch Income', 'Chargeback Income', 'AVS Income', 'Total Stmt Income', 'Total Discount Income']
 
   check = columnNames.some(c => relevantColumns.includes(c));
   if (check === false) {
-    console.log('No Relevant Column Names Found', allRows[0])
     return false // exit if no relevant columns found
   }
 
@@ -71,7 +70,7 @@ export function getSpendingTotals(file, category) {
     midExpense[merchant] = [name, Number(rowObj['Expense'])]
       for (let col in rowObj) {
         let num = Number(rowObj[col])
-      if (col === 'Income' && num > 0) positive ++
+      if (col === 'BC Sales Amount' && num > 0) positive ++
       if (col === 'MID') {
         num = 1
         mids ++

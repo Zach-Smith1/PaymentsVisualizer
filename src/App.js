@@ -319,9 +319,10 @@ function App(props) {
   }
   if (sheets) {
     allSheets = sheets.map((s, i) => {
-      const sheetName = workbook.SheetNames[i]; // 3rd sheet is relevant one in sample data
+      const sheetName = workbook.SheetNames[i];
       const sheet = workbook.Sheets[sheetName];
-      const obj = XLSX.utils.sheet_to_json(sheet);
+      sheet['!rows'] = undefined
+      const obj = XLSX.utils.sheet_to_json(sheet, {raw: true});
       console.log(obj)
       const csv = sheetObjectToCSV(obj);
       if (getSpendingTotals(csv)) {

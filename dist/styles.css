@@ -347,35 +347,35 @@ select {
   grid-row: 3;
   grid-column: 4;
 }
-.table {
+.col1 {
+  text-align: left;
+}
+.col2 {
+  text-align: right;
+}
+table {
   position: relative;
   overflow-y: scroll;
   margin: 1%;
-  max-width: fit-content;
-  border-radius: 1em;
   border-width: 5px;
   border-style: double;
   border-color: black;
-  border-collapse: collapse;
   border-spacing: 0;
-  padding: 1%;
+  padding: 0%;
   table-layout: fixed;
 }
 .merchantTable {
+  border-top: #000;
+  border-bottom: #000;
+  border-left: white;
+  border-right: white;
+  border-width: 5px;
+  border-style: solid;
   grid-row: 5;
   grid-column: 4;
-  position: relative;
   overflow-y: scroll;
-  margin-right: 2em;
+  margin-right: 3em;
   max-width: fit-content;
-  border-radius: 1em;
-  border-width: 5px;
-  border-style: double;
-  border-color: black;
-  border-collapse: collapse;
-  border-spacing: 0;
-  padding: 1%;
-  table-layout: fixed;
 }
 .modal-overlay {
   position: fixed;
@@ -413,7 +413,8 @@ select {
 .modal-close-button:hover {
   color: gray;
 }
-/* th {
+thead {
+  overflow-x: hidden;
   background-color: #989898;
   position: sticky;
   top: 0px;
@@ -421,11 +422,3 @@ select {
   border-collapse: collapse;
   border-spacing: 0;
 }
-tbody {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-tr {
-  border-collapse: collapse;
-  border-spacing: 0;
-} */
