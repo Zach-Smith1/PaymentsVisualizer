@@ -1,13 +1,16 @@
 const { arMiddleware, cookieParser, fullLogout, requireLogin } = require('@authrocket/authrocket-middleware');
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(cors()); // Enable CORS for all routes
+// Other middleware and routes...
 app.use(cookieParser())
 app.use('/logout', fullLogout)
-app.use(arMiddleware({
+app.use('/login', arMiddleware({
   authrocket: {
     loginrocketUrl: 'https://valid-prize-5f87.e2.loginrocket.com/'
   }
