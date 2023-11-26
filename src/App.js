@@ -255,30 +255,6 @@ function App(props) {
     setMainSheet(val)
   }
 
-  const handleLogout = async () => {
-    try {
-      // Make a request to the /logout endpoint
-      const response = await fetch('/login', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-
-      // Check the response status and handle accordingly
-      if (response.status === 200) {
-        // Successful logout, you might want to redirect the user or update the UI
-        console.log('Logout successful');
-      } else {
-        // Handle unsuccessful logout
-        console.log('login failed', response);
-      }
-    } catch (error) {
-      console.error('Error during logout:', error);
-    }
-  };
-
-
   let inputMessage;
   if (window.screen.width < 768) {
     inputMessage = "Tap to Upload File"
@@ -359,7 +335,7 @@ function App(props) {
 
   return (
     <div className='grid'>
-      <h1 id="nav">Payments Visualizer<button onClick={handleLogout}>Login</button></h1>
+      <h1 id="nav">Payments Visualizer</h1>
       <div className={`drag-drop-input ${dragging ? 'dragging' : ''}`} onDragEnter={dragEnter} onDragLeave={dragLeave} onDragOver={dragOver} onDrop={dragDrop}>
         <div className='dragMessage' id='d&d'>{inputMessage}</div>
         <input className='inputButton' type='file' name='file' onChange={importFile} multiple />

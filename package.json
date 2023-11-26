@@ -17,7 +17,6 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
-    "@authrocket/authrocket-middleware": "^1.1.0",
     "@babel/traverse": "^7.23.2",
     "axios": "^1.4.0",
     "buffer": "^6.0.3",
