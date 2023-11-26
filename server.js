@@ -7,15 +7,15 @@ const port = process.env.PORT || 3000;
 
 // Other middleware and routes...
 app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/logout', fullLogout)
 app.use('/login', arMiddleware({
   authrocket: {
     loginrocketUrl: 'https://valid-prize-5f87.e2.loginrocket.com/'
   }
 }))
-app.use(requireLogin)
 // Serve static files from the 'dist' directory
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(requireLogin)
 
 // Route for the homepage
 app.get('/', (req, res) => {

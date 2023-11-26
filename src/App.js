@@ -262,7 +262,7 @@ function App(props) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-        },
+        }
       });
 
       // Check the response status and handle accordingly
@@ -271,7 +271,7 @@ function App(props) {
         console.log('Logout successful');
       } else {
         // Handle unsuccessful logout
-        console.log('Logout failed');
+        console.log('login failed', response);
       }
     } catch (error) {
       console.error('Error during logout:', error);
