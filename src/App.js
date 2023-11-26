@@ -258,7 +258,7 @@ function App(props) {
   const handleLogout = async () => {
     try {
       // Make a request to the /logout endpoint
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch('/login', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
