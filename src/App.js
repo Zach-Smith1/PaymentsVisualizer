@@ -259,10 +259,14 @@ function App(props) {
   if (window.screen.width < 768) {
     inputMessage = "Tap to Upload File"
   } else {
-    inputMessage = <><strong>Drag and Drop Payments Info</strong><br /> or Click to Upload</>
+    inputMessage = <><strong>Drag and Drop Data</strong><br/> or Click to Upload</>
   }
   let [allSheets, name, downloadButton, table, merchantTable, midPie, expensePie, incomeDonut, baseChart, keyTakes, moreInfo, totalCount, radio] = Array(13).fill(null);
   if (download) {
+    document.getElementsByClassName("drag-drop-input")[0].id = "small"
+    document.getElementById("uploadIcon").style.opacity = 0;
+    document.getElementById("csvIcon").style.opacity = 0;
+    document.getElementById("xlsxIcon").style.opacity = 0;
     moreInfo = <h1 className='MoreInfo'>Click Chart for Merchant Info</h1>
     name = <div>
       Generated From:<br />
@@ -337,14 +341,15 @@ function App(props) {
     <div className='grid'>
       <h1 id="nav">Payments Visualizer</h1>
       <div className={`drag-drop-input ${dragging ? 'dragging' : ''}`} onDragEnter={dragEnter} onDragLeave={dragLeave} onDragOver={dragOver} onDrop={dragDrop}>
-        <div className='dragMessage' id='d&d'>{inputMessage}</div>
+      {inputMessage}<br/>
+      <img id="csvIcon" src="../dist/images/csv-file-icon.png" alt="csv icon"/>
+      <img id="uploadIcon" src="../dist/images/uploadIcon.png" alt="upload icon"/>
+      <img id="xlsxIcon" src="../dist/images/xlsx-file-icon.png" alt="xlsx icon"/>
         <input className='inputButton' type='file' name='file' onChange={importFile} multiple />
         <label htmlFor='file'></label>
       </div>
       <div className='name'>{name}</div>
-
       {totalCount}
-
       {baseChart}
       {moreInfo}
       {keyTakes}
@@ -367,6 +372,5 @@ function App(props) {
     </div>
   );
 }
-
 
 export default App;

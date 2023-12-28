@@ -11,7 +11,7 @@ let isAuthenticated = false;
 const authenticateMiddleware = (req, res, next) => {
   const token = req.query.token; // Get token from the query parameter
   if (!token) {
-    return res.redirect('https://user-login-router-370bfb10a1f1.herokuapp.com/');
+    return res.redirect('https://login.eaasystart.com');
   }
 
   try {
