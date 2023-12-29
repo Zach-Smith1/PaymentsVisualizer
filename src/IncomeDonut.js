@@ -71,7 +71,7 @@ const IncomeDonut = ({ totals }) => {
       showForSingleSeries: false,
       showForNullSeries: true,
       showForZeroSeries: true,
-      position: 'right',
+      position: 'bottom',
       floating: false,
       fontSize: '14px',
       fontFamily: 'Helvetica, Arial',
@@ -92,7 +92,7 @@ const IncomeDonut = ({ totals }) => {
     title: {
       text: 'Income Breakdown',
       align: 'center',
-      offsetX: -100,
+      offsetX: 0,
       style: {
         fontSize:  '24px',
         fontWeight:  'bold',
@@ -106,7 +106,7 @@ const IncomeDonut = ({ totals }) => {
 
   return (
     <div>
-      <Chart options={options} series={seriesState} type='pie' width='80%' />
+      <Chart options={options} series={seriesState} type='pie' width='100%' height='400px'/>
     </div>
   );
 };

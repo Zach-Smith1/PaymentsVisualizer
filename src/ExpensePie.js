@@ -70,8 +70,8 @@ const ExpensePie = ({ totals }) => {
       show: true,
       showForNullSeries: true,
       showForZeroSeries: true,
-      position: 'left',
-      horizontalAlign: 'left',
+      position: 'bottom',
+      horizontalAlign: 'center',
       floating: false,
       fontSize: '14px',
       fontFamily: 'Helvetica, Arial',
@@ -91,7 +91,7 @@ const ExpensePie = ({ totals }) => {
     title: {
       text: 'Expenses Breakdown',
       align: 'center',
-      offsetX: 100,
+      offsetX: 0,
       style: {
         fontSize:  '24px',
         fontWeight:  'bold',
@@ -105,7 +105,7 @@ const ExpensePie = ({ totals }) => {
 
   return (
     <div>
-      <Chart options={options} series={seriesState} type='pie' width='80%' />
+      <Chart options={options} series={seriesState} type='pie' width='100%' height='400px'/>
     </div>
   );
 };

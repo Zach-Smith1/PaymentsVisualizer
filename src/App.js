@@ -256,6 +256,7 @@ function App(props) {
   }
 
   let inputMessage;
+  let title = "Vital Analytics";
   if (window.screen.width < 768) {
     inputMessage = "Tap to Upload File"
   } else {
@@ -263,6 +264,7 @@ function App(props) {
   }
   let [allSheets, name, downloadButton, table, merchantTable, midPie, expensePie, incomeDonut, baseChart, keyTakes, moreInfo, totalCount, radio] = Array(13).fill(null);
   if (download) {
+    title = "Your Metrics";
     document.getElementsByClassName("drag-drop-input")[0].id = "small"
     document.getElementById("uploadIcon").style.opacity = 0;
     document.getElementById("csvIcon").style.opacity = 0;
@@ -288,7 +290,7 @@ function App(props) {
     </form>
     totalCount = <div className='merchants'>
       Data from <strong>{active}</strong> Merchants<br />
-      <span>Show&thinsp;
+      <span>Showing&thinsp;
         <select id='selector' onChange={changeActive} value={undefined}>
           <option key='all' value={count.mids}>All</option>
           <option key='open' value={count.open}>Open</option>
@@ -310,7 +312,7 @@ function App(props) {
     </div>
     keyTakes = <KeyData data={object} active={active} />
     // download button = button to download the table displayed on screen as a csv file to local device
-    downloadButton = <button onClick={handleDownloadCSV}>Download {fileName}<br />Table</button>
+    downloadButton = <button onClick={handleDownloadCSV}>Download Totals</button>
     table = <div className='table' id='table'>
       <Table className="tableDiv" csv={download} />
     </div>
@@ -339,7 +341,7 @@ function App(props) {
 
   return (
     <div className='grid'>
-      <h1 id="nav">Payments Visualizer</h1>
+      <h1 id="nav">{title}</h1>
       <div className={`drag-drop-input ${dragging ? 'dragging' : ''}`} onDragEnter={dragEnter} onDragLeave={dragLeave} onDragOver={dragOver} onDrop={dragDrop}>
       {inputMessage}<br/>
       <img id="csvIcon" src="../dist/images/csv-file-icon.png" alt="csv icon"/>
@@ -348,13 +350,16 @@ function App(props) {
         <input className='inputButton' type='file' name='file' onChange={importFile} multiple />
         <label htmlFor='file'></label>
       </div>
-      <div className='name'>{name}</div>
-      {totalCount}
+      <a id="home" href='https://login.eaasystart.com/home'>
+        <img id="homeIcon" src="../dist/images/house-window-icon.png" alt="house icon"/>
+      </a>
+      {/* <div className='name'>{name}</div> */}
       {baseChart}
-      {moreInfo}
+      {totalCount}
       {keyTakes}
-      {midPie}
       {radio}
+      {midPie}
+      {moreInfo}
       {expensePie}
       {incomeDonut}
       {merchantTable}

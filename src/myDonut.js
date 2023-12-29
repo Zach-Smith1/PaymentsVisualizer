@@ -118,7 +118,7 @@ const MyDonut = ({ totals, change, top }) => {
 
   return (
     <div>
-      <Chart options={options} series={series} type='donut' width='80%' />
+      <Chart options={options} series={series} type='donut' width='90%' />
     </div>
   );
 }
