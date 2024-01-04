@@ -256,7 +256,7 @@ function App(props) {
   }
 
   let inputMessage;
-  let title = "Vital Analytics";
+  let title = "EaaSy Analytics";
   if (window.screen.width < 768) {
     inputMessage = "Tap to Upload File"
   } else {

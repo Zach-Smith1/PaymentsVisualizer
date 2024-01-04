@@ -259,16 +259,67 @@ button:hover {
   font-size: larger;
 }
 #nav {
-  top: -10px;
+  /* top: -10px;*/
   grid-row: 1;
   grid-column: 2/4;
-  font-size: 5vh;
+  /* font-size: 5vh; */
   text-align: center;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  color: rgb(177, 0, 0);
+  font-family: "Raleway", sans-serif
+  /*color: rgb(177, 0, 0);
   max-height: 1.5em;
   margin-top: 1%;
-  z-index: 100;
+  z-index: 100; */
+}
+#nav {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  font-size: 6vh;
+  color: #080808;
+  -webkit-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+}
+
+#nav span {
+  display: block;
+  font-size: 0.5em;
+  line-height: 1.222;
+}
+#nav em {
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* === HEADING STYLE #1 === */
+#nav {
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 5px;
+}
+#nav:before {
+  width: 28px;
+  height: 5px;
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  margin-left: -14px;
+  background-color: #b80000;
+}
+#nav:after {
+  width: 100px;
+  height: 1px;
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: -19px;
+  left: 50%;
+  margin-left: -50px;
+  background-color: #b80000;
 }
 .name {
   display: flex;
@@ -446,8 +497,12 @@ thead {
   background-position: top middle;
 }
 @media screen and (max-width: 800px) {
+  #nav {
+    margin-top: 2vh;
+    font-size: 4vh;
+  }
   button {
-    width: 200px;
+    width: 8em;
   }
   .grid {
     display: flex; /* Switch to Flexbox on mobile */
