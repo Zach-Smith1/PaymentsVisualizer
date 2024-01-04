@@ -156,8 +156,8 @@ button:hover {
   right: 2vh;
 }
 #homeIcon {
-  width: 2em;
-  height: 2em;
+  width: 1.5em;
+  height: 1.5em;
 }
 .expensePie{
   grid-row: 4;
@@ -296,7 +296,6 @@ button:hover {
 /* === HEADING STYLE #1 === */
 #nav {
   text-align: center;
-  text-transform: uppercase;
   padding-bottom: 5px;
 }
 #nav:before {
@@ -345,7 +344,7 @@ button:hover {
   grid-row: 5;
   grid-column: 2/4;
   width: max-content;
-  margin-top: 5%;
+  margin-top: 20%;
   margin-left: 85%;
   height: 25%;
   z-index: 1000;
@@ -392,8 +391,6 @@ table {
   overflow-y: scroll;
   margin: 1%;
   border-width: 5px;
-  border-style: solid;
-  border-color: black;
   border-spacing: 0;
   padding: 0%;
   table-layout: fixed;
@@ -409,7 +406,7 @@ table {
   grid-column: 4;
   overflow-y: scroll;
   max-width: fit-content;
-  min-height: 40vh;
+  min-height: 13em;
 }
 .modal-overlay {
   position: fixed;
@@ -496,7 +493,7 @@ thead {
   background-size: auto 299%;
   background-position: top middle;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px), (max-height: 650px) {
   #nav {
     margin-top: 2vh;
     font-size: 4vh;
@@ -524,7 +521,7 @@ thead {
     width: 100px;
     position: relative;
     z-index: 2;
-    margin-bottom: -10vh;
+    margin-bottom: -25vh;
   }
   .inputButton {
     width: 100%;

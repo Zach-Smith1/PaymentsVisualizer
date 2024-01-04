@@ -256,7 +256,7 @@ function App(props) {
   }
 
   let inputMessage;
-  let title = "EaaSy Analytics";
+  let title = "EaaSy ANALYTICS";
   if (window.screen.width < 768) {
     inputMessage = "Tap to Upload File"
   } else {
@@ -264,7 +264,7 @@ function App(props) {
   }
   let [allSheets, name, downloadButton, table, merchantTable, midPie, expensePie, incomeDonut, baseChart, keyTakes, moreInfo, totalCount, radio] = Array(13).fill(null);
   if (download) {
-    title = "Your Metrics";
+    title = "YOUR METRICS";
     document.getElementsByClassName("drag-drop-input")[0].id = "small"
     document.getElementById("uploadIcon").style.opacity = 0;
     document.getElementById("csvIcon").style.opacity = 0;
@@ -275,7 +275,7 @@ function App(props) {
       <input className='nameInput' name='name' type='text' placeholder='a' value={fileName} onChange={nameChange} />
     </div>
     radio = <form className='radio'>
-      Show Top
+      &thinsp; Top
       {[10, 20, 30].map((option) => (
         <label key={option}>
           <input
