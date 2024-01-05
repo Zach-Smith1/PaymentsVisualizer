@@ -351,9 +351,8 @@ function App(props) {
         <label htmlFor='file'></label>
       </div>
       <a id="home" href='https://login.eaasystart.com/home'>
-        <img id="homeIcon" src="../dist/images/house-window-icon.png" alt="house icon"/>
+        <img id="homeIcon" src="../dist/images/house-icon.png" alt="house icon"/>
       </a>
-      {/* <div className='name'>{name}</div> */}
       {baseChart}
       {totalCount}
       {keyTakes}
