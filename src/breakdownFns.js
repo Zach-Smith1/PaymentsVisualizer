@@ -92,6 +92,9 @@ export function getSpendingTotals(file, category) {
   for (let name in totals) {
     // round totals to next highest cent
     let rows = `${name}, ${Number(totals[name].toFixed(2))}\n`;
+    if (name === 'MID') {
+      continue
+    }
     // store as csv formatted string
     totalsCsv += rows;
   }

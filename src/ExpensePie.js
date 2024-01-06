@@ -46,15 +46,15 @@ const ExpensePie = ({ totals }) => {
       });
       return updatedColors;
     });
-    setWidth((prevWidth) => {
-      const updatedWidth = prevWidth.map((value, index) => {
-        if (index === chartContext) {
-          return value !== 30 ? 30 : 12;
-        }
-        return value;
-      });
-      return updatedWidth;
-    });
+    // setWidth((prevWidth) => {
+    //   const updatedWidth = prevWidth.map((value, index) => {
+    //     if (index === chartContext) {
+    //       return value !== 30 ? 30 : 12;
+    //     }
+    //     return value;
+    //   });
+    //   return updatedWidth;
+    // });
   };
 
   const options = {

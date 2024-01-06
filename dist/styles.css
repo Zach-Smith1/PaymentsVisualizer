@@ -276,7 +276,7 @@ button:hover {
   margin: 0;
   font-family: "Raleway", sans-serif;
   font-weight: 300;
-  font-size: 6vh;
+  font-size: xxx-large;
   color: #080808;
   -webkit-transition: all 0.4s ease 0s;
   -o-transition: all 0.4s ease 0s;
@@ -299,24 +299,24 @@ button:hover {
   padding-bottom: 5px;
 }
 #nav:before {
-  width: 28px;
+  width: 36px;
   height: 5px;
   display: block;
   content: "";
   position: absolute;
-  bottom: -20px;
-  left: 50%;
+  top: 48px;
+  left: 48%;
   margin-left: -14px;
   background-color: #b80000;
 }
 #nav:after {
-  width: 100px;
+  width: 37%;
   height: 1px;
   display: block;
   content: "";
   position: absolute;
-  bottom: -19px;
-  left: 50%;
+  top: 50px;
+  left: 41%;
   margin-left: -50px;
   background-color: #b80000;
 }
@@ -380,20 +380,23 @@ select {
   grid-row: 3;
   grid-column: 4;
 }
-.col1 {
-  text-align: left;
-}
-.col2 {
-  text-align: right;
-}
 table {
   position: relative;
   overflow-y: scroll;
   margin: 1%;
   border-width: 5px;
-  border-spacing: 0;
+  border-spacing: 0px;
+  border: white;
+  border-style: solid;
   padding: 0%;
   table-layout: fixed;
+  width: max-content;
+}
+.col1 {
+  text-align: left;
+}
+.col2 {
+  text-align: right;
 }
 .merchantTable {
   /* border-top: #000;
@@ -481,12 +484,11 @@ thead {
   width: fit-content;
   grid-column: 2/4;
   grid-row: 2;
-  margin: 1%;
+  margin: 2%;
   border-radius: 0em;
   border-width: 10px;
   border-style: solid;
   border-color: #c7c7c7;
-  /* border-color: #424242; */
   position: relative;
   transition-duration: .75s;
   padding: 1% 3% 6%;
@@ -495,8 +497,11 @@ thead {
 }
 @media screen and (max-width: 1000px), (max-height: 650px) {
   #nav {
-    margin-top: 2vh;
-    font-size: 4vh;
+    font-size: xx-large;
+  }
+  #nav:after {
+    left: 29%;
+    width: 65%;
   }
   button {
     width: 8em;

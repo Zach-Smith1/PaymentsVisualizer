@@ -329,7 +329,6 @@ function App(props) {
       const sheet = workbook.Sheets[sheetName];
       sheet['!rows'] = undefined
       const obj = XLSX.utils.sheet_to_json(sheet, {raw: true});
-      console.log(obj)
       const csv = sheetObjectToCSV(obj);
       if (getSpendingTotals(csv)) {
         return <button key={i} value={i} onClick={selectSheet}>{s}</button>
