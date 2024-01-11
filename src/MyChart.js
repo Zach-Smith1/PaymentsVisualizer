@@ -8,13 +8,17 @@ const MyChart = ({ totals, active, aveOn }) => {
 
   for (const key in totals) {
     if (key === 'BC Sales Amount') {
-      data.push(Number(totals[key].toFixed(2)));
-      labels.push('Volume Processed')
-      colors.push('#2E93fA')
+      data.unshift(Number(totals[key].toFixed(2)));
+      labels.unshift('Volume Processed')
+      colors.unshift('#84857d')
     } else if (key === 'Residual') {
       data.push(Number(totals[key].toFixed(2)));
       labels.push('Payable')
       colors.push('#45bd0c')
+    } else if (key === 'Income') {
+      data.push(Number(totals[key].toFixed(2)));
+      labels.push('Income')
+      colors.push('#2E93fA')
     }
   }
 

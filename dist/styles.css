@@ -220,7 +220,6 @@ button:hover {
   flex-direction: column;
   grid-row: 3;
   grid-column: 1;
-  height: 60vh;
   margin: 3%;
   text-align: center;
 }
@@ -390,7 +389,7 @@ table {
   border-style: solid;
   padding: 0%;
   table-layout: fixed;
-  width: max-content;
+
 }
 .col1 {
   text-align: left;
@@ -517,14 +516,24 @@ thead {
   .donut {
     width: 90%;
   }
+  .baseChart {
+    width: 90%;
+  }
   .midDonut {
-    width: 100%;
+    width: 90%;
     position: relative;
     z-index: 1;
+  }
+  .expensePie {
+    width: 90%;
+  }
+  .incomeDonut {
+    width: 90%;
   }
   .radio {
     width: 100px;
     position: relative;
+    align-items: left;
     z-index: 2;
     margin-bottom: -25vh;
   }
