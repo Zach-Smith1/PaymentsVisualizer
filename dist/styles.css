@@ -563,3 +563,8 @@ thead {
     bottom: 8vw;
   }
 }
+@media screen and (max-height: 400px) {
+.poster {
+    max-width: 25vw;
+}
+}

@@ -343,14 +343,14 @@ function App(props) {
       <h1 id="nav">{title}</h1>
       <div className={`drag-drop-input ${dragging ? 'dragging' : ''}`} onDragEnter={dragEnter} onDragLeave={dragLeave} onDragOver={dragOver} onDrop={dragDrop}>
       {inputMessage}<br/>
-      <img id="csvIcon" src="../dist/images/csv-file-icon.png" alt="csv icon"/>
-      <img id="uploadIcon" src="../dist/images/uploadIcon.png" alt="upload icon"/>
-      <img id="xlsxIcon" src="../dist/images/xlsx-file-icon.png" alt="xlsx icon"/>
+      <img id="csvIcon" src="../public/images/csv-file-icon.png" alt="csv icon"/>
+      <img id="uploadIcon" src="../public/images/uploadIcon.png" alt="upload icon"/>
+      <img id="xlsxIcon" src="../public/images/xlsx-file-icon.png" alt="xlsx icon"/>
         <input className='inputButton' type='file' name='file' onChange={importFile} multiple />
         <label htmlFor='file'></label>
       </div>
       <a id="home" href='https://login.eaasystart.com/home'>
-        <img id="homeIcon" src="../dist/images/house-icon.png" alt="house icon"/>
+        <img id="homeIcon" src="../public/images/house-icon.png" alt="house icon"/>
       </a>
       {baseChart}
       {totalCount}

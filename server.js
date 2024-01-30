@@ -25,19 +25,21 @@ const authenticateMiddleware = (req, res, next) => {
   }
 };
 
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 // Protected endpoint in the main application
 app.get('/', authenticateMiddleware, (req, res) => {
   // If the middleware passes (token is valid), provide access to the application
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
+
 // Serve static files from the 'dist' directory only if authenticated
 app.use((req, res, next) => {
   if (isAuthenticated) {
     express.static(path.join(__dirname, 'dist'))(req, res, next);
   } else {
-    // Optionally, you can handle unauthenticated requests differently here
-    res.status(401).send('Unauthorized - Access to static files is not allowed.');
+    res.status(401).send('Unauthorized - User not authenticated, please login at login.eaasystart.com');
   }
 });
 
