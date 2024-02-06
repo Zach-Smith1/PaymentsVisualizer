@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@babel/traverse": "^7.23.2",
+    "@canvasjs/react-charts": "^1.0.0",
     "axios": "^1.4.0",
     "buffer": "^6.0.3",
     "cors": "^2.8.5",

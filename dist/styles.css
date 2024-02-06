@@ -59,6 +59,9 @@ button:hover {
   grid-row: 2;
   grid-column: 1;
 }
+.canvasjs-chart-credit {
+  opacity: 0; /*removes watermark from funnel chart*/
+}
 .custom {
   display: flex;
   flex-direction: column;
@@ -207,6 +210,7 @@ button:hover {
   /* overflow: scroll; */
 }
 .baseChart {
+  margin-top: 100px;
   grid-row: 3;
   grid-column: 2/4;
   text-align: center;
@@ -389,7 +393,7 @@ table {
   border-style: solid;
   padding: 0%;
   table-layout: fixed;
-
+  z-index: 1001;
 }
 .col1 {
   text-align: left;
@@ -505,6 +509,9 @@ thead {
   button {
     width: 8em;
   }
+  .cover {
+    left: 71vw;
+  }
   .grid {
     display: flex; /* Switch to Flexbox on mobile */
     flex-direction: column; /* Stack items vertically */
@@ -517,7 +524,7 @@ thead {
     width: 90%;
   }
   .baseChart {
-    width: 90%;
+    width: 100%;
   }
   .midDonut {
     width: 90%;
@@ -562,9 +569,4 @@ thead {
     right: 10vw;
     bottom: 8vw;
   }
-}
-@media screen and (max-height: 400px) {
-.poster {
-    max-width: 25vw;
-}
 }
