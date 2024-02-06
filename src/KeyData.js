@@ -20,11 +20,11 @@ const KeyData = ({ data, active }) => {
   let effectiveRate = (totalFees / totalVolume);
   let markup = (totalFees - totalPaid) / totalFees
 
-  const formattedNumber = (num) => {
+  const formattedNumber = (num, p) => {
     return num !== undefined && !isNaN(num) ? num.toLocaleString('en-US', {
       style: 'decimal',
-      minimumFractionDigits: 3,
-      maximumFractionDigits: 4,
+      minimumFractionDigits: p || 2,
+      maximumFractionDigits: p || 2,
     }) : ' No Data Found '
   };
 
@@ -38,8 +38,8 @@ const KeyData = ({ data, active }) => {
       <span className='keys' id='average'><strong>Income/ MID: </strong>${formattedNumber(aveGrossPer)}</span>
       <span className='keys'><strong>Fees Paid: </strong>${formattedNumber(totalPaid)}</span>
       <span className='keys' id='average'><strong>Net Revenue/ MID: </strong>${formattedNumber(aveNetPer)}</span>
-      <span className='keys'><strong>Effective Rate: </strong>{formattedNumber((effectiveRate * 100))}%</span>
-      <span className='keys'><strong>Markup: </strong>{formattedNumber((markup * 100))}%</span>
+      <span className='keys'><strong>Effective Rate: </strong>{formattedNumber((effectiveRate * 100), 4)}%</span>
+      <span className='keys'><strong>Markup: </strong>{formattedNumber((markup * 100), 4)}%</span>
     </div>
   );
 }
